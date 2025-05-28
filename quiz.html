@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embedded Google Form Quiz</title>
+  <style>
+    #timer {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz Time! Please complete the form below</h1>
+  <div id="timer">Time Remaining: 05:00</div>
+
+  <!-- Paste your Google Form iframe here -->
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embedded Google Form Quiz</title>
+  <style>
+    #timer {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Quiz Time! Please complete the form below</h1>
+  <div id="timer">Time Remaining: 05:00</div>
+
+  <!-- Paste your Google Form iframe here -->
+  YOUR_IFRAME_CODE
+
+  <script>
+    // Timer countdown in seconds (e.g. 5 minutes)
+    let timeLeft = 300;
+    const timerDisplay = document.getElementById('timer');
+
+    const timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Time is up! Please submit your quiz now.');
+        // Optionally disable the iframe or redirect user:
+        // document.querySelector('iframe').style.pointerEvents = 'none';
+        // window.location.href = 'https://example.com/quiz-ended';
+        return;
+      }
+      const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      const seconds = (timeLeft % 60).toString().padStart(2, '0');
+      timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds}`;
+      timeLeft--;
+    }, 1000);
+
+    // Warning when user switches tabs or minimizes window
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        alert('Warning: You switched tabs or minimized the window. Please stay on the quiz page.');
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+  <script>
+    // Timer countdown in seconds (e.g. 5 minutes)
+    let timeLeft = 300;
+    const timerDisplay = document.getElementById('timer');
+
+    const timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert('Time is up! Please submit your quiz now.');
+        // Optionally disable the iframe or redirect user:
+        // document.querySelector('iframe').style.pointerEvents = 'none';
+        // window.location.href = 'https://example.com/quiz-ended';
+        return;
+      }
+      const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      const seconds = (timeLeft % 60).toString().padStart(2, '0');
+      timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds}`;
+      timeLeft--;
+    }, 1000);
+
+    // Warning when user switches tabs or minimizes window
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        alert('Warning: You switched tabs or minimized the window. Please stay on the quiz page.');
+      }
+    });
+  </script>
+
+</body>
+</html>
