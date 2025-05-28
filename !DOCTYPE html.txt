@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    #timer {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: red;
+    }
+    iframe {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to the Quiz</h1>
+  <div id="timer">Time Remaining: 10:00</div>
+
+  <!-- Embed Google Form -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdnUcghMIyJVsZwIraSTaLgD90dVDfRycekaI8lgHRpMMqAsg/viewform?embedded=true" width="640" height="10292" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>" width="640" height="800" id="quizForm">Loading…</iframe>
+
+  <script>
+    // Timer countdown
+    let totalTime = 10 * 60; // 10 minutes in seconds
+    const timerDisplay = document.getElementById("timer");
+
+    const updateTimer = () => {
+      let minutes = Math.floor(totalTime / 60);
+      let seconds = totalTime % 60;
+      timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+      totalTime--;
+
+      if (totalTime < 0) {
+        alert("Time is up! The quiz will now be closed.");
+        // Redirect or block further answers
+        document.getElementById("quizForm").style.display = "none";
+        document.body.innerHTML = "<h2>Time is up. Thank you!</h2>";
+        clearInterval(timerInterval);
+      }
+    };
+
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Tab switch detection
+    let warned = false;
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden && !warned) {
+        alert("⚠️ Tab switching is not allowed! Next switch will end your quiz.");
+        warned = true;
+      } else if (document.hidden && warned) {
+        alert("❌ Second tab switch detected. Submitting now.");
+        document.getElementById("quizForm").style.display = "none";
+        document.body.innerHTML = "<h2>You switched tabs. Quiz ended.</h2>";
+      }
+    });
+  </script>
+
+</body>
+</html>
