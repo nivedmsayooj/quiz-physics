@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Physics Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  #warning {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: none;
+  }
+  #timer {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  #quizForm {
+    width: 100%;
+    height: 800px;
+    border: 1px solid #ccc;
+  }
+  #overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.9);
+    z-index: 1000;
+    text-align: center;
+    padding-top: 200px;
+    font-size: 24px;
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<div id="warning">Warning: You switched tabs/windows! The quiz will submit soon.</div>
+<div id="timer">Time left: 10:00</div>
+
+<iframe id="quizForm" 
+  src="https://docs.google.com/forms/d/e/1FAIpQLSdnUcghMIyJVsZwIraSTaLgD90dVDfRycekaI8lgHRpMMqAsg/viewform?embedded=true"
+  frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+<div id="overlay">Time's up or cheating detected! Please submit your form.</div>
+
+<script>
+  // Timer setup (10 minutes)
+  let totalTime = 10 * 60; // seconds
+  const timerDisplay = document.getElementById('timer');
+  const warning = document.getElementById('warning');
+  const overlay = document.getElementById('overlay');
+  const iframe = document.getElementById('quizForm');
+
+  let warningShown = false;
+  let cheating = false;
+
+  function formatTime(seconds) {
+    let m = Math.floor(seconds / 60);
+    let s = seconds % 60;
+    return m.toString().padStart(2, '0') + ':' + s.toString().padStart(2, '0');
+  }
+
+  // Countdown timer
+  let countdown = setInterval(() => {
+    if (totalTime <= 0) {
+      clearInterval(countdown);
+      endQuiz();
+    } else {
+      totalTime--;
+      timerDisplay.textContent = 'Time left: ' + formatTime(totalTime);
+    }
+  }, 1000);
+
+  // Handle tab visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (!warningShown) {
+        warning.style.display = 'block';
+        warning.textContent = 'Warning: You switched tabs/windows! The quiz will submit soon.';
+        warningShown = true;
+
+        // After 10 seconds, end the quiz automatically
+        setTimeout(() => {
+          if (warningShown) {
+            cheating = true;
+            endQuiz();
+          }
+        }, 10000);
+      }
+    } else {
+      // If user comes back to tab, optionally reset warning or keep it shown
+    }
+  });
+
+  function endQuiz() {
+    // Show overlay message
+    overlay.style.display = 'block';
+    // Optionally hide the iframe to prevent further interaction
+    iframe.style.display = 'none';
+    warning.style.display = 'none';
+    timerDisplay.style.display = 'none';
+
+    // You can't submit Google Form programmatically for security reasons
+    // So you just block access here and rely on user to submit
+
+    alert('Quiz ended. Please submit your form if you have not done so.');
+
+    // Optionally, redirect user somewhere or reload
+    // window.location.href = 'https://your-website.com/thank-you';
+  }
+</script>
+
+</body>
+</html>
